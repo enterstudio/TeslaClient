@@ -194,6 +194,23 @@ public class Tesla {
     }
 
     public List<Vehicle> getVehicles() { return vehicles; }
+    
+    /**
+     * Get a vehicle by its VIN
+     * @param vin
+     * @return
+     */
+    public Vehicle getVehicleByVIN(String vin) {
+        List<Vehicle> vehicles = getVehicles();
+        Vehicle vehicle = null;
+        for (Vehicle vehicleCandidate : vehicles) {
+        	if (vin.equals(vehicleCandidate.getVIN())) {
+        		vehicle = vehicleCandidate;
+        		break;
+        	}
+        }
+        return vehicle;
+    }
 
 
 /*------------------------------------------------------------------------------

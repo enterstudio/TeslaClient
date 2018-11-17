@@ -8,13 +8,7 @@ package org.noroomattheinn.tesla.test;
 
 import java.util.List;
 import java.util.logging.Level;
-import org.noroomattheinn.tesla.ChargeState;
-import org.noroomattheinn.tesla.VehicleState;
-import org.noroomattheinn.tesla.DriveState;
-import org.noroomattheinn.tesla.GUIState;
-import org.noroomattheinn.tesla.HVACState;
-import org.noroomattheinn.tesla.StreamState;
-import org.noroomattheinn.tesla.Streamer;
+
 import org.noroomattheinn.tesla.Tesla;
 import org.noroomattheinn.tesla.Vehicle;
 //import org.noroomattheinn.utils.Utils;
@@ -51,64 +45,68 @@ public class BasicTest {
 
         for (Vehicle vehicle : vehicles) {
             System.out.format("%s\n", vehicle);
-            System.out.format("Mobile Enabled: %s\n", vehicle.mobileEnabled());
             
-            Streamer streamer = vehicle.getStreamer();
-            StreamState ss = streamer.beginNewStream();
-            if (ss != null) { System.out.println(ss); }
-//            while ((ss = streamer.tryExistingStream()) != null) {
-//                System.out.println(ss);
-//                Utils.sleep(500);
+//            System.out.println(vehicle.queryDrive().shiftState);
+            System.out.println(vehicle.queryData());
+            
+//            System.out.format("Mobile Enabled: %s\n", vehicle.mobileEnabled());
+//            
+//            Streamer streamer = vehicle.getStreamer();
+//            StreamState ss = streamer.beginNewStream();
+//            if (ss != null) { System.out.println(ss); }
+////            while ((ss = streamer.tryExistingStream()) != null) {
+////                System.out.println(ss);
+////                Utils.sleep(500);
+////            }
+//            VehicleState vs = vehicle.queryVehicle();
+//            if (vs.valid) {
+//                try {
+//                    System.out.println(vs.rawState.toString(4));
+//                } catch (Exception e) {
+//                    System.err.println(e.getMessage());
+//                }
+//                System.out.format("SW Version: %s\n", vs.version);
+//                System.out.format("Pano Percent: %d\n", vs.panoPercent);
+//                System.out.format("Pano State: %s\n", vs.panoState);
+//                System.out.format("Vehicle State: %s\n", vs);
 //            }
-            VehicleState vs = vehicle.queryVehicle();
-            if (vs.valid) {
-                try {
-                    System.out.println(vs.rawState.toString(4));
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-                System.out.format("SW Version: %s\n", vs.version);
-                System.out.format("Pano Percent: %d\n", vs.panoPercent);
-                System.out.format("Pano State: %s\n", vs.panoState);
-                System.out.format("Vehicle State: %s\n", vs);
-            }
-            
-            vehicle.setPano(Vehicle.PanoCommand.vent);
-            vs = vehicle.queryVehicle();
-            if (vs.valid) {
-                System.out.format("Pano Percent: %d\n", vs.panoPercent);
-                System.out.format("Pano State: %s\n", vs.panoState);
-            }
-
-            GUIState gui = vehicle.queryGUI();
-            if (gui.valid) {
-                System.out.format("Charge Rate Units: %s\n", gui.chargeRateUnits);
-                System.out.format("GUIState: %s\n", gui.toString());        
-            }
-            
-            HVACState hvac = vehicle.queryHVAC();
-            if (hvac.valid) {
-                System.out.format("Fan Status: %d\n", hvac.fanStatus);        
-            }
-            
-            ChargeState cs = vehicle.queryCharge();
-            if (cs.valid) {
-                System.out.format("FastChargerPresent: %s\n", cs.fastChargerPresent);
-                System.out.format(
-                        "SOC Limit: %d, Min %d, Max: %d, Std: %d\n",
-                        cs.chargeLimitSOC, cs.chargeLimitSOCMin,
-                        cs.chargeLimitSOCMax, cs.chargeLimitSOCStd);
-                System.out.format("ChargeState: %s\n", cs.toString());
-            }
-            
-            DriveState driveState = vehicle.queryDrive();
-            if (driveState.valid) {
-                System.out.format("DriveState: %s\n", driveState.toString());
-            }
-
-            
-            //ActionController actions = new ActionController(vehicle);
-            //actions.honk();
+//            
+//            vehicle.setPano(Vehicle.PanoCommand.vent);
+//            vs = vehicle.queryVehicle();
+//            if (vs.valid) {
+//                System.out.format("Pano Percent: %d\n", vs.panoPercent);
+//                System.out.format("Pano State: %s\n", vs.panoState);
+//            }
+//
+//            GUIState gui = vehicle.queryGUI();
+//            if (gui.valid) {
+//                System.out.format("Charge Rate Units: %s\n", gui.chargeRateUnits);
+//                System.out.format("GUIState: %s\n", gui.toString());        
+//            }
+//            
+//            HVACState hvac = vehicle.queryHVAC();
+//            if (hvac.valid) {
+//                System.out.format("Fan Status: %d\n", hvac.fanStatus);        
+//            }
+//            
+//            ChargeState cs = vehicle.queryCharge();
+//            if (cs.valid) {
+//                System.out.format("FastChargerPresent: %s\n", cs.fastChargerPresent);
+//                System.out.format(
+//                        "SOC Limit: %d, Min %d, Max: %d, Std: %d\n",
+//                        cs.chargeLimitSOC, cs.chargeLimitSOCMin,
+//                        cs.chargeLimitSOCMax, cs.chargeLimitSOCStd);
+//                System.out.format("ChargeState: %s\n", cs.toString());
+//            }
+//            
+//            DriveState driveState = vehicle.queryDrive();
+//            if (driveState.valid) {
+//                System.out.format("DriveState: %s\n", driveState.toString());
+//            }
+//
+//            
+//            //ActionController actions = new ActionController(vehicle);
+//            //actions.honk();
         }
     }
 }

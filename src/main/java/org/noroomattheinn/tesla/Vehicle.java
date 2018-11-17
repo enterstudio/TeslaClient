@@ -8,8 +8,10 @@ package org.noroomattheinn.tesla;
 
 import java.util.Locale;
 import java.util.logging.Level;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.noroomattheinn.utils.Utils;
+
 import us.monoid.json.JSONArray;
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
@@ -39,7 +41,7 @@ public class Vehicle {
 
     // The following are effectively constants, but are set in the constructor
     private final String    ChargeEndpoint, DriveEndpoint, GUIEndpoint,
-                            HVACEndpoint, VehicleStateEndpoint;
+                            HVACEndpoint, VehicleStateEndpoint, DataEndpoint;
     private final String    HVAC_Start, HVAC_Stop, HVAC_SetTemp;
     private final String    Charge_Start, Charge_Stop, Charge_SetMax,
                             Charge_SetStd, Charge_SetPct;
@@ -117,6 +119,7 @@ public class Vehicle {
         GUIEndpoint = tesla.vehicleData(vehicleID, "gui_settings");
         HVACEndpoint = tesla.vehicleData(vehicleID, "climate_state");
         VehicleStateEndpoint = tesla.vehicleData(vehicleID, "vehicle_state");
+        DataEndpoint = tesla.vehicleData(vehicleID, "data");
         
         // Initialize HVAC endpoints
         HVAC_Start = tesla.vehicleCommand(vehicleID, "auto_conditioning_start");
@@ -210,6 +213,9 @@ public class Vehicle {
     }
     public VehicleState queryVehicle() {
         return new VehicleState(tesla.getState(VehicleStateEndpoint));
+    }
+    public Data queryData() {
+        return new Data(tesla.getState(DataEndpoint));
     }
     public Streamer getStreamer() { return streamer; }
 

@@ -7,6 +7,7 @@
 package org.noroomattheinn.tesla;
 
 import java.util.Date;
+
 import us.monoid.json.JSONObject;
 
 /**
@@ -47,9 +48,10 @@ public class DriveState extends BaseState {
     
     @Override public String toString() {
         return String.format(
-            "    Location: (%3.5f, %3.5f)\n" +
-            "    Heading: %d\n" +
-            "    GPS as of time: %s\n",
-            latitude, longitude, heading, new Date(gpsAsOf*1000));
+            ", Location: (%3.5f, %3.5f)" +
+            ", Heading: %d" +
+            ", Shift State: %s" +
+            ", GPS as of time: %s",
+            latitude, longitude, heading, shiftState, new Date(gpsAsOf*1000));
     }
 }

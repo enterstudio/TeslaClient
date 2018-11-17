@@ -7,6 +7,7 @@
 package org.noroomattheinn.tesla;
 
 import org.noroomattheinn.utils.Utils;
+
 import us.monoid.json.JSONObject;
 
 /**
@@ -50,14 +51,14 @@ public class HVACState extends BaseState {
     
     @Override public String toString() {
         return String.format(
-            "    Inside Temp: %3.0f\n" +
-            "    Outside Temp: %3.0f\n" +
-            "    Driver Setpoint: %3.0f\n" +
-            "    Passenger Setpoint: %3.0f\n" +
-            "    HVAC On: %s\n" +
-            "    Front Defroster On: %d\n" +
-            "    Rear Defroster On: %s\n" +
-            "    Fan Setting: %d\n", 
+            ", Inside Temp: %3.0f" +
+            ", Outside Temp: %3.0f" +
+            ", Driver Setpoint: %3.0f" +
+            ", Passenger Setpoint: %3.0f" +
+            ", HVAC On: %s" +
+            ", Front Defroster On: %d" +
+            ", Rear Defroster On: %s" +
+            ", Fan Setting: %d", 
             Utils.cToF(insideTemp),
             Utils.cToF(outsideTemp),
             Utils.cToF(driverTemp),

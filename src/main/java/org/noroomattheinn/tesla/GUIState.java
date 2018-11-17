@@ -44,11 +44,11 @@ public class GUIState extends BaseState {
     
     @Override public String toString() {
         return String.format(
-            "    Distance Units: %s\n" +
-            "    Temperature Units: %s\n" +
-            "    Charge Rate Units: %s\n" +
-            "    Use 24 Hour Time: %b\n" +
-            "    Range Display: %s\n", 
+            ", Distance Units: %s" +
+            ", Temperature Units: %s" +
+            ", Charge Rate Units: %s" +
+            ", Use 24 Hour Time: %b" +
+            ", Range Display: %s", 
             distanceUnits, temperatureUnits, chargeRateUnits,
             use24HrTime, rangeDisplay);
     }

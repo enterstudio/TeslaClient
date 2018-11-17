@@ -7,7 +7,7 @@
 package org.noroomattheinn.tesla;
 
 import java.util.Date;
-import static org.noroomattheinn.tesla.BaseState.emptyJSONObj;
+
 import us.monoid.json.JSONObject;
 
 /**
@@ -74,12 +74,12 @@ public class StreamState extends BaseState {
     
     @Override public String toString() {
         return String.format(
-                "Time Stamp: %s (%s)\n" +
-                "Speed: %3.1f\n" +
-                "Location: [(Lat: %f, Lng: %3f), Heading: %d, Elevation: %d]\n" +
-                "Charge Info: [SoC: %d, Power: %d]\n" +
-                "Odometer: %7.1f\n" +
-                "Range: %d\n",
+                ", Time Stamp: %s (%s)" +
+                ", Speed: %3.1f" +
+                ", Location: [(Lat: %f, Lng: %3f), Heading: %d, Elevation: %d]" +
+                ", Charge Info: [SoC: %d, Power: %d]" +
+                ", Odometer: %7.1f" +
+                ", Range: %d",
                 vehicleTimestamp, new Date(vehicleTimestamp),
                 speed, estLat, estLng, estHeading, elevation,
                 soc, power, odometer, range

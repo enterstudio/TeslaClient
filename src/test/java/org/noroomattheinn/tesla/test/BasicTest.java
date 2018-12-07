@@ -26,6 +26,11 @@ public class BasicTest {
      */
     public static void main(String[] args) {            
         Tesla t = new Tesla();
+        
+        // !!!{"access_token":"50ef3317d30923e51b6329a8bf04c4e69dbcb5aa364c106447d581f610a76d04","created_at":1544007071,"expires_in":3888000,"refresh_token":"f937d3aa60362266b99138310b7deef3a96ee250e3e2b7249b1608a35583c9c1","token_type":"bearer"}
+//        t.connectWithToken("info@softworks.nl", "50ef3317d30923e51b6329a8bf04c4e69dbcb5aa364c106447d581f610a76d04");
+        t.refreshTokens("info@softworks.nl", "f937d3aa60362266b99138310b7deef3a96ee250e3e2b7249b1608a35583c9c1");
+        if (1==1) return;
                 
         if (args.length == 2) {
             if (!t.connect(args[0], args[1])) {

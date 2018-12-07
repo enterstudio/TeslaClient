@@ -13,15 +13,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.ShortBufferException;
 import javax.crypto.spec.SecretKeySpec;
+
 import org.apache.commons.lang3.StringUtils;
 import org.noroomattheinn.utils.Pair;
 import org.noroomattheinn.utils.RestHelper;
+
 import us.monoid.json.JSONArray;
 import us.monoid.json.JSONException;
 import us.monoid.json.JSONObject;
@@ -81,6 +84,7 @@ public class Tesla {
     private List<Vehicle> vehicles;
     private String username;
     private String token;
+    private String refreshToken;
     
 /*==============================================================================
  * -------                                                               -------
@@ -131,6 +135,59 @@ public class Tesla {
      * @return  true    The connection succeeded
      *          false   No dice, couldn't connect or fetch vehicles
      */
+    public boolean refreshTokens(String username, String originalRefreshToken) {
+        String[] apiMaterial = getAPIMaterial();
+
+        // Create the payload
+        String payload;
+        try
+        {
+           StringWriter stringWriter = new StringWriter();
+           JSONWriter writer = new JSONWriter( stringWriter );
+           writer.object()
+              .key( "grant_type" )   .value( "refresh_token" )
+              .key( "client_id" )    .value( apiMaterial[0] )
+              .key( "client_secret" ).value( apiMaterial[1] )
+              .key( "refresh_token" ).value( originalRefreshToken )
+              .endObject();
+
+           payload = stringWriter.toString();
+        }
+        catch( JSONException ex ) {
+           throw new Error( "Big problem. Can't write to string.", ex );
+        }
+
+        try {
+            JSONResource r = api.json(
+                    rawEndpoint("oauth/token"),
+                    Resty.content(new JSONObject(payload)));
+            if (r == null) {
+            	return false;
+            }
+            System.out.println("!!!" + r.object());
+            token = r.object().getString("access_token");
+            if (token == null) {
+            	return false;
+            }
+            refreshToken = r.object().getString("refresh_token");
+            if (refreshToken == null) {
+            	return false;
+            }
+            return true;
+        } catch (IOException | JSONException e) {
+            logger.warning("Trouble connecting: " + e.getMessage());
+            return false;
+        }
+    }
+    
+
+    /*
+     * Try connecting with the supplied credentials. If the login succeeds, the
+     * credentials and session info will be stored in cookies for the future.
+     * If we can login, go ahead and fetch the vehicle list while we're at it.
+     * @return  true    The connection succeeded
+     *          false   No dice, couldn't connect or fetch vehicles
+     */
     public boolean connect(String username, String password) {
         String[] apiMaterial = getAPIMaterial();
 
@@ -159,8 +216,12 @@ public class Tesla {
                     rawEndpoint("oauth/token"),
                     Resty.content(new JSONObject(payload)));
             if (r == null) return false;
+            System.out.println("!!!" + r.object());
             String accessToken = r.object().getString("access_token");
-            if (accessToken == null) return false;
+            if (accessToken == null) {
+            	return false;
+            }
+            refreshToken = r.object().getString("refresh_token");
             return connectWithToken(username, accessToken);
         } catch (IOException | JSONException e) {
             logger.warning("Trouble connecting: " + e.getMessage());
@@ -170,6 +231,9 @@ public class Tesla {
     
     public String getUsername() { return username; }
     public String getToken() { return token; }
+    public String getRefreshToken() { return refreshToken; }
+    
+    // TODO: refresh token https://support.teslafi.com/communities/1/topics/72-auto-renew-access-token
     
 /*------------------------------------------------------------------------------
  *

@@ -52,6 +52,6 @@ public class DriveState extends BaseState {
             ", Heading: %d" +
             ", Shift State: %s" +
             ", GPS as of time: %s",
-            latitude, longitude, heading, shiftState, new Date(gpsAsOf*1000));
+            latitude, longitude, heading, (shiftState == null ? "really null" : shiftState), new Date(gpsAsOf*1000));
     }
 }

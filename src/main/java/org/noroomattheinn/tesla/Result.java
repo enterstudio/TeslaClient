@@ -51,4 +51,8 @@ public class Result {
     public static final Result Succeeded = new Result(true, "");
     public static final Result Failed = new Result(false, "");
     
+    @Override
+	public String toString() {
+    	return ("Success=" + success + " " + explanation).trim();
+    }
 }
